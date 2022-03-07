@@ -1,4 +1,4 @@
-import connection from "../pg.js";
+import connection from "../db.js";
 
 export async function getGames(req, res) {
 

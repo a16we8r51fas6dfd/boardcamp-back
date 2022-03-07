@@ -1,5 +1,5 @@
 import categorySchema from '../schemas/categorySchema.js'
-import connection from '../pg.js'
+import connection from '../db.js'
 
 export async function validateCategorySchema(req, res, next) {
     const category = req.body
