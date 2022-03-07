@@ -137,10 +137,14 @@ export async function returnRental(req, res) {
         const pricePerDay = parseInt(rentalData.rows[0].originalPrice)/parseInt(rentalData.rows[0].daysRented)
 
         const delayedDays = dayjs().diff(rentDate, "days") - rentalData.rows[0].daysRented
-        const delayFee = pricePerDay * delayedDays
+        let delayFee = pricePerDay * delayedDays
 
-        console.log(delayFee)
         console.log(returnDate)
+        
+        if(delayFee < 0) {
+            delayFee = 0
+        }
+        console.log(delayFee)
 
         await connection.query(`
             UPDATE rentals
