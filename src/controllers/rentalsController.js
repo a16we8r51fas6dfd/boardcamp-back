@@ -51,7 +51,6 @@ export async function postRental(req, res) {
         res.sendStatus(200)
         return
     } catch (error) {
-        console.log(error)
         res.sendStatus(500)
         return
     }
@@ -117,7 +116,6 @@ export async function getRentals(req, res) {
         res.send(rentalsArray)
         return
     } catch (error) {
-        console.log(error)
         res.sendStatus(500)
     }
 }
@@ -138,13 +136,10 @@ export async function returnRental(req, res) {
 
         const delayedDays = dayjs().diff(rentDate, "days") - rentalData.rows[0].daysRented
         let delayFee = pricePerDay * delayedDays
-
-        console.log(returnDate)
         
         if(delayFee < 0) {
             delayFee = 0
         }
-        console.log(delayFee)
 
         await connection.query(`
             UPDATE rentals
@@ -155,7 +150,6 @@ export async function returnRental(req, res) {
         res.sendStatus(200)
         return
     } catch (error) {
-        console.log(error)
         res.sendStatus(500)
         return
     }
@@ -174,7 +168,7 @@ export async function deleteRental(req, res) {
             return
         }
 
-        if (rentalData.rows[0].returnDate !== null) {
+        if (rentalData.rows[0].returnDate === null) {
             res.sendStatus(400)
             return
         }
